@@ -1,0 +1,9 @@
+*.pyc
+*~
+/.vscode
+__pycache__
+.DS_Store
+dump.rdb
+*.dump
+local.py
+db.sqlite3
