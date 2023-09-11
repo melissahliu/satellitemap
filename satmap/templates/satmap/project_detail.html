@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <article class="post">
+        <aside class="actions">  
+            {% if user.is_authenticated %}
+                <a class="btn btn-secondary" href="">
+                </a>
+            {% endif %}
+        </aside>
+        <div class="header">
+            <h2>{{ project.name }}</h2>
+            <div class="icon-container">
+                <a class="Icon" href="{% url 'project_edit' pk=project.pk %}"><i class="fa-light fa-pencil" title="Edit Project"></i></a> 
+                <a class="Icon" href="{% url 'project_duplicate' pk=project.pk %}"><i class="fa-regular fa-copy" title="Duplicate Project"></i></a>
+                <a class="Icon" href="{% url 'project_delete' pk=project.pk %}"><i class="fa-regular fa-trash-can" title="Delete Project"></i></a>
+            </div>
+        </div>
+        <p>{{ project.description }}</p>
+        <p><b></p>
+        <a href="{% url 'map_create' %}?project={{ project.id }}"><button class="btn btn-primary">Add Map</button></a>
+        <p><b></p>
+
+        {% for map in project.map_set.all %}
+        <div class="header">
+            <h1><a href="{% url 'map_detail' pk=map.pk %}">{{ map.title }}</a></h1>
+            <div class="icon-container">
+                <a href="{% url 'map_edit' pk=map.pk %}"><i class="fa-light fa-pencil" title="Edit Map"></i></a>
+                <a href="{% url 'map_duplicate' pk=map.pk %}?project={{ map.project.id }}"><i class="fa-regular fa-copy" title="Duplicate Map"></i></a>
+                <a href="{% url 'map_delete' pk=map.pk %}"><i class="fa-regular fa-trash-can" title="Delete Map"></i></a>
+            </div>
+        </div>
+        <p>{{ map.description }}</p>
+        <p><b></p>
+        <div id="map{{ map.id }}" class="map"></div>
+        <script>
+            function initMap() {
+                // Create a map object
+               
+                const map = new google.maps.Map(document.getElementById("map{{ map.id }}"), {
+                        center: {lat: {{ map.latitude }}, lng: {{ map.longitude}}},  // Set the initial center of the map
+                        zoom: {{ map.zoom }}  // Set the initial zoom level
+                });
+            }
+            initMap();
+        </script>
+        <p><b></p>
+        {% endfor %}
+    </article>
+{% endblock %}

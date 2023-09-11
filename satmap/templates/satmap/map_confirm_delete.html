@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Confirm Map Deletion</h2>
+  <p>Are you sure you want to delete the map "{{ map.title }}"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+    <a href="{% url 'map_detail' pk=map.pk %}">Cancel</a>
+  </form>
+{% endblock %}

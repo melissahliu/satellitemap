@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    
+    <h2>{% if request.resolver_match.url_name == 'project_edit'  %} Edit {% else %} New {% endif %} Project</h2>
+    <form method="POST" class="project-form w-75">{% csrf_token %}
+        {{form.media}}
+        {{ form|crispy }}
+        <button type="submit" class="save btn btn-secondary">Save</button>
+    </form>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    $( function() {
+        $( "#datepicker_start" ).datepicker();
+        $( "#datepicker_end" ).datepicker();
+    } );
+
+  </script>
+{% endblock %}

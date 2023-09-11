@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Confirm Layer Deletion</h2>
+  <p>Are you sure you want to delete the layer "{{ layer.name }}"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+    <a href="{% url 'layer_detail' pk=layer.pk %}">Cancel</a>
+  </form>
+{% endblock %}

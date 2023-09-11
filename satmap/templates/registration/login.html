@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <div class="container-fluid">
+    <div class="card mx-auto mt-5 p-4" style="max-width:400px;">
+      <h2>Login</h2>
+      <form class="Form mt-4" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="form-group row align-items-center">
+            <div class="col-sm-12">
+              {{ field|as_crispy_field }}
+            </div>
+              {% if field.errors %}
+              {{ field.errors }}
+              {% endif %}
+          </div>
+        {% endfor %}
+        <div class="form-group row align-items-center">
+          <div class="col-sm-6 mt-5">
+            <button type="submit" class="btn btn-primary btn-login btn-block">Login</button>
+          </div>
+          <div class="col-sm-6 mt-5">
+            <a href="{% url 'password_reset' %}" class="btn btn-secondary btn-block">Forgot Password</a>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

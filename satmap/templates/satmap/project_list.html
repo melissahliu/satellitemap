@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<p>
+	<br> Create a new project using this button, or click on one of the existing projects below to view and edit it.
+	<br>
+	<br><a href="{% url 'project_create' %}"><button class="btn btn-primary">Create Project</button></a>
+	<br>
+	<br>
+	</p>
+	{% for project in project_list %}
+		<article>
+			<div class="header">
+				<h2><a href="{% url 'project_detail' pk=project.pk %}">{{ project.name }}</a></h2>
+				<div class="icon-container">
+					<a class="Icon" href="{% url 'project_edit' pk=project.pk %}"><i class="fa-light fa-pencil" title="Edit"></i></a> 
+					<a class="Icon" href="{% url 'project_duplicate' pk=project.pk %}"><i class="fa-regular fa-copy"></i></a>
+					<a class="Icon" href="{% url 'project_delete' pk=project.pk %}"><i class="fa-regular fa-trash-can"></i></a>
+				</div>
+			</div>
+			<p>{{ project.description|linebreaksbr }}</p>
+			<p><b></p>
+		</article>
+	{% endfor %}
+{% endblock %}

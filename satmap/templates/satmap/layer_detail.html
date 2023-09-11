@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <article class="post">
+        <aside class="actions">  
+            {% if user.is_authenticated %}
+                <a class="btn btn-secondary" href="">
+                </a>
+            {% endif %}
+        </aside>
+        <div class="header">
+            <h2>{{ layer.name }}{% if layer.units %} ({{ layer.units }}){% endif %}</h2>
+            <div class="icon-container">
+                <a class="Icon" href="{% url 'layer_edit' pk=layer.pk %}"><i class="fa-light fa-pencil" title="Edit Layer"></i></a> 
+                <a class="Icon" href="{% url 'layer_delete' pk=layer.pk %}"><i class="fa-regular fa-trash-can" title="Delete Layer"></i></a>
+            </div>
+        </div>
+        <p>{{ layer.description }}</p>
+    </article>
+{% endblock %}

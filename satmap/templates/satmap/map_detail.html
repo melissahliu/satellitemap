@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="{% url 'project_detail' pk=map.project.pk %}"><button class="btn btn-link">Back to Project</button></a>
+    <div class="header">
+        <h2>{{ map.title }}</h2>
+        <div class="icon-container">
+            <a href="{% url 'map_edit' pk=map.pk %}"><i class="fa-light fa-pencil" title="Edit Map"></i></a>
+            <a href="{% url 'map_duplicate' pk=map.pk %}?project={{ map.project.id }}"><i class="fa-regular fa-copy" title="Duplicate Map"></i></a>
+            <a href="{% url 'map_delete' pk=map.pk %}"><i class="fa-regular fa-trash-can" title="Delete Map"></i></a>
+        </div>
+    </div>
+    <p class="py-3">{{ map.description }}</p>
+    
+
+    <!-- <article class="post">
+        <aside class="actions">  
+            {% if user.is_authenticated %}
+                <a class="btn btn-secondary" href=""">
+                    
+                </a>
+            {% endif %}
+        </aside>
+        {% if map.published_date %}
+            <time class="date">
+                {{ map.published_date }}
+            </time>
+        {% endif %}
+        <h2>{{ map.title }} - {{ url }}</h2>
+        <p>Coordinates: {{ map.latitude }}, {{ map.longitude|linebreaksbr }}</p>
+    </article> -->
+    <div style="height:600px;width:100%">
+        {{ folium_map|safe }}
+    </div>
+    <h3>{% if map.layer.all|length != 0 %}Map Data{% endif %}</h3>
+    {% for layer in  map.layer.all %}
+    <div class="py-3">
+        <div class="accordion accordion-flush" id="accordion{{ layer.id }}">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-heading{{ layer.id }}">
+                <button class="accordion-button collapsed fs-3" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ layer.id }}" aria-expanded="false" aria-controls="flush-collapse{{ layer.id }}">
+                    <strong>{{ layer.name }}{% if layer.units %} ({{ layer.units }}){% endif %}</strong>
+                </button>
+              </h2>
+              <div id="flush-collapse{{ layer.id }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ layer.id }}" data-bs-parent="#accordion{{ layer.id }}">
+
+                <div class="accordion-body">
+                    {% for date in dates %}
+                        {% if forloop.first %}
+                            <p>{{ date }}</p>
+                        {% endif %}
+                    {% endfor %}
+                    <p>{{ layer.description }}</p></div>
+              </div>
+            </div>
+        </div>
+            
+        </div>
+        <div class="d-flex w-100 py-3">
+            <div style="flex:1;" class="text-center">{{ layer.min }}</div>
+            {% for color in layer.get_palette_list %}
+            <div style="flex:1;background-color: #{{ color }};"></div>
+            {% endfor %}
+            <div style="flex:1;" class="text-center">{{ layer.max }}</div>
+        </div>
+    </div>
+
+
+    
+    {% endfor %}
+    <!-- <div id="map{{ map.id }}" class="map"></div>
+    <script>
+        function initMap() {
+            // Create a map object
+           
+            const map = new google.maps.Map(document.getElementById("map{{ map.id }}"), {
+                zoom: 4,
+                center: {lat: 0, lng: 0}
+            });
+
+            var geeLayer = new google.maps.GroundOverlay(
+                "{{ url }}",
+                {north: 80, south: -80, east: 180, west: -180},
+                {opacity: 0.5}
+                );
+
+                geeLayer.setMap(map);
+        }
+        initMap();
+    </script> -->
+
+   
+{% endblock %}

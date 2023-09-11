@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<style>
+    p {
+        font-weight:600;
+    }
+</style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+
+{% endblock %}
+
+{% block content %}
+    <h2>SPLIT MAP: {{ map.title }}</h2>
+    <p>{{ map.description }}</p>
+    <p><b></p>
+    <a href="{% url 'map_edit' pk=map.pk %}"><button class="btn btn-primary">Edit Map</button></a>
+    <a href="{% url 'map_duplicate' pk=map.pk %}?project={{ map.project.id }}"><button class="btn btn-primary">Duplicate Map</button></a>
+    <a href="{% url 'map_delete' pk=map.pk %}"><button class="btn btn-primary">Delete Map</button></a>
+    <p><b></p>
+    <!-- <article class="post">
+        <aside class="actions">  
+            {% if user.is_authenticated %}
+                <a class="btn btn-secondary" href=""">
+                    
+                </a>
+            {% endif %}
+        </aside>
+        {% if map.published_date %}
+            <time class="date">
+                {{ map.published_date }}
+            </time>
+        {% endif %}
+        <h2>{{ map.title }} - {{ url }}</h2>
+        <p>Coordinates: {{ map.latitude }}, {{ map.longitude|linebreaksbr }}</p>
+    </article> -->
+    <div style="height:600px;width:100%">
+        {{ folium_map|safe }}
+    </div>
+    <!-- <div id="map{{ map.id }}" class="map"></div>
+    <script>
+        function initMap() {
+            // Create a map object
+           
+            const map = new google.maps.Map(document.getElementById("map{{ map.id }}"), {
+                zoom: 4,
+                center: {lat: 0, lng: 0}
+            });
+
+            var geeLayer = new google.maps.GroundOverlay(
+                "{{ url }}",
+                {north: 80, south: -80, east: 180, west: -180},
+                {opacity: 0.5}
+                );
+
+                geeLayer.setMap(map);
+        }
+        initMap();
+    </script> -->
+    <script>
+ 
+    </script>
+{% endblock %}

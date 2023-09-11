@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    
+    <h2>Request Account</h2>
+    <form method="POST" class="w-50">{% csrf_token %}
+        <label for="id_name" class="form-label mt-4">Name</label>
+        <input type="text" class="form-control" name="name" id='id_name'>
+        <label for="id_email" class="form-label mt-4">Email address</label>
+        <input type="email" class="form-control" name="email" id='id_email'>
+        <label for="id_text" class="form-label mt-4">Why do you want an account?</label>
+        <textarea class="form-control" name="text" id='id_text'></textarea>
+        <button type="submit" class="save btn btn-secondary mt-4">Save</button>
+    </form>
+{% endblock %}
